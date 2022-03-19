@@ -28,6 +28,13 @@ const CommentList = (props) => {
     console.log("newComment", newComment);
   };
 
+  const deleteHandler = (id) => {
+    console.log("ricevuto in commentlist", id);
+    setComments((previousComments) =>
+      previousComments.filter((comment) => comment.id !== id)
+    );
+  };
+
   return (
     <Fragment>
       <ul>
@@ -42,6 +49,7 @@ const CommentList = (props) => {
               key={comment.id}
               score={comment.score}
               replies={comment.replies}
+              onDelete={deleteHandler}
             />
           );
         })}

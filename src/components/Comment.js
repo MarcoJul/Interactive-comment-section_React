@@ -31,6 +31,12 @@ const Comment = (props) => {
     setShowModal(!showModal);
   };
 
+  const deleteHandler = (id) => {
+    console.log("ricevuto in comment", id);
+    props.onDelete(id);
+    setShowModal(false);
+  };
+
   let actionArea;
   if (isCurrentUser) {
     actionArea = (
@@ -59,7 +65,12 @@ const Comment = (props) => {
 
   return (
     <Fragment>
-      {showModal && <DeleteModal onAction={toggleDeleteModal} />}
+      {showModal && (
+        <DeleteModal
+          onAction={toggleDeleteModal}
+          onDelete={deleteHandler.bind(this, props.id)}
+        />
+      )}
       <li className={classes.box}>
         <div className={classes.topBox}>
           <img

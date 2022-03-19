@@ -21,7 +21,7 @@ const ModalOverlay = (props) => {
         </button>
         <button
           className={`${classes.btn} ${classes.confirm}`}
-          onClick={props.onAction}
+          onClick={props.onDelete}
         >
           Yes, Delete
         </button>
@@ -38,7 +38,7 @@ const DeleteModal = (props) => {
         document.getElementById("backdrop-root")
       )}
       {createPortal(
-        <ModalOverlay onAction={props.onAction} />,
+        <ModalOverlay onAction={props.onAction} onDelete={props.onDelete} />,
         document.getElementById("overlay-root")
       )}
     </Fragment>
