@@ -28,15 +28,17 @@ const Comment = (props) => {
   };
 
   const toggleDeleteModal = () => {
-    console.log("ciao");
     setShowModal(!showModal);
   };
 
   let actionArea;
   if (isCurrentUser) {
     actionArea = (
-      <div>
-        <button className={classes.deleteBtn} onClick={toggleDeleteModal}>
+      <div className={classes.btnSection}>
+        <button
+          className={`${classes.actionBtn} ${classes.deleteBtn}`}
+          onClick={toggleDeleteModal}
+        >
           <img src={deleteIcon} />
           Delete
         </button>
@@ -66,6 +68,8 @@ const Comment = (props) => {
             className={classes.avatar}
           />
           <p className={classes.username}>{props.username}</p>
+
+          {isCurrentUser ? <div className={classes.patch}>you</div> : ""}
           <p className={classes.time}>{props.time}</p>
         </div>
         <div className={classes.textbox}>
