@@ -1,4 +1,7 @@
+import { useState } from "react";
+
 import Reply from "./Reply";
+import DeleteModal from "../UI/DeleteModal";
 
 import classes from "./Comment.module.css";
 
@@ -10,26 +13,30 @@ import EditIcon from "../assets/icon-edit.svg";
 import { Fragment } from "react";
 
 import data from "../data/data.json";
+import CommentForm from "./CommentForm";
 
 const Comment = (props) => {
-  const replies = props.replies;
-  let areReplies = false;
-  if (replies !== []) areReplies = true;
+  const [isReplying, setIsReplying] = useState(false);
+  const [areReplies, setAreReplies] = useState(props.replies !== []);
+  const [showModal, setShowModal] = useState(false);
+  const [isCurrentUser, setIsCurrentUser] = useState(
+    data.currentUser.username === props.username
+  );
 
-  const currentUserData = data.currentUser;
+  const replyHandler = () => {
+    setIsReplying(true);
+  };
+
+  const toggleDeleteModal = () => {
+    console.log("ciao");
+    setShowModal(!showModal);
+  };
 
   let actionArea;
-  if (props.username !== currentUserData.username) {
-    actionArea = (
-      <button className={classes.actionBtn}>
-        <img src={replyIcon} alt="replyicon" />
-        Reply
-      </button>
-    );
-  } else {
+  if (isCurrentUser) {
     actionArea = (
       <div>
-        <button className={classes.deleteBtn}>
+        <button className={classes.deleteBtn} onClick={toggleDeleteModal}>
           <img src={deleteIcon} />
           Delete
         </button>
@@ -39,10 +46,18 @@ const Comment = (props) => {
         </button>
       </div>
     );
+  } else {
+    actionArea = (
+      <button className={classes.actionBtn} onClick={replyHandler}>
+        <img src={replyIcon} alt="replyicon" />
+        Reply
+      </button>
+    );
   }
 
   return (
     <Fragment>
+      {showModal && <DeleteModal onAction={toggleDeleteModal} />}
       <li className={classes.box}>
         <div className={classes.topBox}>
           <img
@@ -69,9 +84,10 @@ const Comment = (props) => {
           {actionArea}
         </div>
       </li>
+      {isReplying && <CommentForm />}
       <ul className={classes.replySection}>
         {areReplies &&
-          replies.map((reply) => {
+          props.replies.map((reply) => {
             return (
               <Reply
                 img={reply.user.image.png}
