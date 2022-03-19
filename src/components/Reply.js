@@ -1,4 +1,5 @@
-import classes from "./Comment.module.css";
+import { useState } from "react";
+import classes from "./Reply.module.css";
 
 import replyIcon from "../assets/icon-reply.svg";
 import deleteIcon from "../assets/icon-delete.svg";
@@ -6,7 +7,36 @@ import minusIcon from "../assets/icon-minus.svg";
 import plusIcon from "../assets/icon-plus.svg";
 import EditIcon from "../assets/icon-edit.svg";
 
+import data from "../data/data.json";
+
 const Reply = (props) => {
+  const [isCurrentUser, setIsCurrentUser] = useState(
+    data.currentUser.username === props.username
+  );
+
+  let actionArea;
+  if (isCurrentUser) {
+    actionArea = (
+      <div className={classes.btnSection}>
+        <button className={`${classes.actionBtn} ${classes.deleteBtn}`}>
+          <img src={deleteIcon} />
+          Delete
+        </button>
+        <button className={classes.actionBtn}>
+          <img src={EditIcon} />
+          Edit
+        </button>
+      </div>
+    );
+  } else {
+    actionArea = (
+      <button className={classes.actionBtn}>
+        <img src={replyIcon} alt="replyicon" />
+        Reply
+      </button>
+    );
+  }
+
   return (
     <li className={classes.box}>
       <div className={classes.topBox}>
@@ -16,6 +46,7 @@ const Reply = (props) => {
           className={classes.avatar}
         />
         <p className={classes.username}>{props.username}</p>
+        {isCurrentUser ? <div className={classes.patch}>you</div> : ""}
         <p className={classes.time}>{props.time}</p>
       </div>
       <div className={classes.textbox}>
@@ -31,10 +62,7 @@ const Reply = (props) => {
             <img src={minusIcon} alt="minusIcon" />
           </button>
         </div>
-        <button className={classes.replyBtn}>
-          <img src={replyIcon} alt="replyicon" />
-          Reply
-        </button>
+        {actionArea}
       </div>
     </li>
   );

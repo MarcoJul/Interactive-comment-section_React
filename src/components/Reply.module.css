@@ -69,6 +69,11 @@
   width: 1.2rem;
 }
 
+.btnSection {
+  display: flex;
+  gap: 2rem;
+}
+
 .actionBtn {
   color: hsl(238, 40%, 52%);
   font-weight: 700;
@@ -83,8 +88,10 @@
   color: hsl(358, 79%, 66%);
 }
 
-.replySection {
-  margin-left: 1.2rem;
-  padding-left: 1rem;
-  border-left: 2px solid hsl(239, 57%, 85%);
+.patch {
+  background-color: hsl(238, 40%, 52%);
+  color: hsl(0, 0%, 100%);
+  font-size: 1.2rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 2px;
 }

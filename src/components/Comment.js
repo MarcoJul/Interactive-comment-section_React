@@ -9,10 +9,37 @@ import plusIcon from "../assets/icon-plus.svg";
 import EditIcon from "../assets/icon-edit.svg";
 import { Fragment } from "react";
 
+import data from "../data/data.json";
+
 const Comment = (props) => {
   const replies = props.replies;
   let areReplies = false;
   if (replies !== []) areReplies = true;
+
+  const currentUserData = data.currentUser;
+
+  let actionArea;
+  if (props.username !== currentUserData.username) {
+    actionArea = (
+      <button className={classes.actionBtn}>
+        <img src={replyIcon} alt="replyicon" />
+        Reply
+      </button>
+    );
+  } else {
+    actionArea = (
+      <div>
+        <button className={classes.deleteBtn}>
+          <img src={deleteIcon} />
+          Delete
+        </button>
+        <button className={classes.actionBtn}>
+          <img src={EditIcon} />
+          Edit
+        </button>
+      </div>
+    );
+  }
 
   return (
     <Fragment>
@@ -39,13 +66,10 @@ const Comment = (props) => {
               <img src={minusIcon} alt="minusIcon" />
             </button>
           </div>
-          <button className={classes.replyBtn}>
-            <img src={replyIcon} alt="replyicon" />
-            Reply
-          </button>
+          {actionArea}
         </div>
       </li>
-      <ul>
+      <ul className={classes.replySection}>
         {areReplies &&
           replies.map((reply) => {
             return (
