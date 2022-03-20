@@ -6,17 +6,23 @@ import classes from "./CommentForm.module.css";
 
 const CommentForm = (props) => {
   const textRef = useRef();
-  console.log(props);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (textRef === "") {
-      console.log("err");
-      return;
-    }
+    if (props.type === "comment") {
+      if (textRef === "") {
+        console.log("err");
+        return;
+      }
 
-    props.onAddComment(textRef);
-    textRef.current.value = "";
+      props.onAddComment(textRef);
+      window.scrollTo({ top: "0", behavior: "smooth" });
+      textRef.current.value = "";
+    }
+    if (props.type === "reply") {
+      props.onAddReply(`@${props.username} ${textRef.current.value}`);
+      textRef.current.value = "";
+    }
   };
 
   return (

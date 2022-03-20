@@ -22,6 +22,9 @@ const Comment = (props) => {
   const [isCurrentUser, setIsCurrentUser] = useState(
     data.currentUser.username === props.username
   );
+  const [replies, setReplies] = useState(props.replies);
+
+  const currentUserData = data.currentUser;
 
   const replyHandler = () => {
     setIsReplying(true);
@@ -32,9 +35,31 @@ const Comment = (props) => {
   };
 
   const deleteHandler = (id) => {
-    console.log("ricevuto in comment", id);
     props.onDelete(id);
     setShowModal(false);
+  };
+
+  const deleteReplyHandler = (id) => {
+    setReplies((previousReplies) =>
+      previousReplies.filter((reply) => reply.id !== id)
+    );
+  };
+
+  const addReplyHandler = (text) => {
+    let newReply = {
+      id: Math.random(),
+      content: text,
+      user: {
+        image: { png: currentUserData.image.png },
+        username: currentUserData.username,
+      },
+      createdAt: "2 hours ago",
+      score: 0,
+    };
+    setReplies((previousReplies) => {
+      return [...previousReplies, newReply];
+    });
+    setIsReplying(false);
   };
 
   let actionArea;
@@ -99,10 +124,16 @@ const Comment = (props) => {
           {actionArea}
         </div>
       </li>
-      {isReplying && <CommentForm />}
+      {isReplying && (
+        <CommentForm
+          onAddReply={addReplyHandler}
+          type="reply"
+          username={props.username}
+        />
+      )}
       <ul className={classes.replySection}>
         {areReplies &&
-          props.replies.map((reply) => {
+          replies.map((reply) => {
             return (
               <Reply
                 img={reply.user.image.png}
@@ -112,6 +143,8 @@ const Comment = (props) => {
                 id={reply.id}
                 key={reply.id}
                 score={reply.score}
+                onDeleteReply={deleteReplyHandler}
+                onAddReply={addReplyHandler}
               />
             );
           })}

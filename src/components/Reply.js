@@ -9,17 +9,25 @@ import EditIcon from "../assets/icon-edit.svg";
 
 import data from "../data/data.json";
 import DeleteModal from "../UI/DeleteModal";
+import CommentForm from "./CommentForm";
 
 const Reply = (props) => {
   const [isCurrentUser, setIsCurrentUser] = useState(
     data.currentUser.username === props.username
   );
-
+  const [isReplying, setIsReplying] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   const toggleDeleteModal = () => {
-    console.log("ciao");
     setShowModal(!showModal);
+  };
+  const deleteHandler = (id) => {
+    props.onDeleteReply(id);
+    setShowModal(false);
+  };
+
+  const replyHandler = () => {
+    setIsReplying(true);
   };
 
   let actionArea;
@@ -41,7 +49,7 @@ const Reply = (props) => {
     );
   } else {
     actionArea = (
-      <button className={classes.actionBtn}>
+      <button className={classes.actionBtn} onClick={replyHandler}>
         <img src={replyIcon} alt="replyicon" />
         Reply
       </button>
@@ -50,7 +58,12 @@ const Reply = (props) => {
 
   return (
     <Fragment>
-      {showModal && <DeleteModal onAction={toggleDeleteModal} />}
+      {showModal && (
+        <DeleteModal
+          onAction={toggleDeleteModal}
+          onDelete={deleteHandler.bind(this, props.id)}
+        />
+      )}
       <li className={classes.box}>
         <div className={classes.topBox}>
           <img
@@ -78,6 +91,13 @@ const Reply = (props) => {
           {actionArea}
         </div>
       </li>
+      {isReplying && (
+        <CommentForm
+          onAddReply={replyHandler}
+          type="reply"
+          username={props.username}
+        />
+      )}
     </Fragment>
   );
 };

@@ -5,8 +5,6 @@ import CommentList from "./components/CommentList";
 
 import data from "./data/data.json";
 
-console.log(data);
-
 const App = () => {
   return (
     <Fragment>

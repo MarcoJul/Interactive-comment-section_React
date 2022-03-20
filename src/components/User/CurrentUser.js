@@ -4,7 +4,6 @@ import data from "../../data/data.json";
 
 const CurrentUser = (props) => {
   const currentUserData = data.currentUser;
-  console.log(currentUserData);
 
   if (props.request === "avatar") {
     return (

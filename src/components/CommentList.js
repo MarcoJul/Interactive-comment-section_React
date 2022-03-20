@@ -7,10 +7,8 @@ const CommentList = (props) => {
   const [comments, setComments] = useState(props.data.comments);
 
   const currentUserData = data.currentUser;
-  console.log(currentUserData);
 
   const addCommentHandler = (text) => {
-    console.log(text);
     let newComment = {
       id: Math.random(),
       content: text.current.value,
@@ -29,7 +27,6 @@ const CommentList = (props) => {
   };
 
   const deleteHandler = (id) => {
-    console.log("ricevuto in commentlist", id);
     setComments((previousComments) =>
       previousComments.filter((comment) => comment.id !== id)
     );
@@ -54,7 +51,7 @@ const CommentList = (props) => {
           );
         })}
       </ul>
-      <CommentForm onAddComment={addCommentHandler} />
+      <CommentForm onAddComment={addCommentHandler} type="comment" />
     </Fragment>
   );
 };
