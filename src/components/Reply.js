@@ -26,8 +26,10 @@ const Reply = (props) => {
     setShowModal(false);
   };
 
-  const replyHandler = () => {
-    setIsReplying(true);
+  const replyHandler = (text) => {
+    props.onAddReply(text);
+    console.log("reply");
+    setIsReplying(false);
   };
 
   let actionArea;
@@ -49,7 +51,7 @@ const Reply = (props) => {
     );
   } else {
     actionArea = (
-      <button className={classes.actionBtn} onClick={replyHandler}>
+      <button className={classes.actionBtn} onClick={() => setIsReplying(true)}>
         <img src={replyIcon} alt="replyicon" />
         Reply
       </button>
