@@ -16,7 +16,10 @@ const ModalOverlay = (props) => {
         comment and can't be undone.
       </p>
       <div className={classes.action}>
-        <button className={`${classes.btn} ${classes.cancel}`}>
+        <button
+          className={`${classes.btn} ${classes.cancel}`}
+          onClick={props.onAction}
+        >
           No, Cancel
         </button>
         <button

@@ -18,6 +18,10 @@ const Reply = (props) => {
   const [isReplying, setIsReplying] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  const [isEdit, setIsEdit] = useState(false);
+
+  const [text, setText] = useState(props.text);
+
   const toggleDeleteModal = () => {
     setShowModal(!showModal);
   };
@@ -31,6 +35,11 @@ const Reply = (props) => {
     console.log("reply");
     setIsReplying(false);
   };
+  const submitEditHandler = (e) => {
+    e.preventDefault();
+    setText(e.target.text.value);
+    setIsEdit(false);
+  };
 
   let actionArea;
   if (isCurrentUser) {
@@ -43,7 +52,12 @@ const Reply = (props) => {
           <img src={deleteIcon} />
           Delete
         </button>
-        <button className={classes.actionBtn}>
+        <button
+          className={classes.actionBtn}
+          onClick={() => {
+            setIsEdit(true);
+          }}
+        >
           <img src={EditIcon} />
           Edit
         </button>
@@ -78,7 +92,13 @@ const Reply = (props) => {
           <p className={classes.time}>{props.time}</p>
         </div>
         <div className={classes.textbox}>
-          <p className={classes.text}>{props.text}</p>
+          {!isEdit ? (
+            <p className={classes.text}>{text}</p>
+          ) : (
+            <form id="editForm" onSubmit={submitEditHandler}>
+              <input placeholder="Text" name="text" defaultValue={text} />
+            </form>
+          )}
         </div>
         <div className={classes.actions}>
           <div className={classes.voteBox}>
@@ -90,7 +110,13 @@ const Reply = (props) => {
               <img src={minusIcon} alt="minusIcon" />
             </button>
           </div>
-          {actionArea}
+          {isEdit ? (
+            <button className={classes.submitBtn} form="editForm">
+              U
+            </button>
+          ) : (
+            actionArea
+          )}
         </div>
       </li>
       {isReplying && (

@@ -19,6 +19,8 @@ const Comment = (props) => {
   const [isReplying, setIsReplying] = useState(false);
   const [areReplies, setAreReplies] = useState(props.replies !== []);
   const [showModal, setShowModal] = useState(false);
+  const [score, setScore] = useState(props.score);
+  const [scoreModified, setSCoreModified] = useState(false);
   const [isCurrentUser, setIsCurrentUser] = useState(
     data.currentUser.username === props.username
   );
@@ -69,6 +71,19 @@ const Comment = (props) => {
     e.preventDefault();
     setText(e.target.text.value);
     setIsEdit(false);
+  };
+
+  const voteHandler = (action) => {
+    if (scoreModified) return;
+    if (action === "up") {
+      setScore((prevScore) => prevScore + 1);
+      setSCoreModified(true);
+    } else if (action === "down") {
+      setScore((prevScore) => prevScore - 1);
+      setSCoreModified(true);
+    } else {
+      return;
+    }
   };
 
   let actionArea;
@@ -128,11 +143,17 @@ const Comment = (props) => {
         </div>
         <div className={classes.actions}>
           <div className={classes.voteBox}>
-            <button className={classes.voteBtn}>
+            <button
+              className={classes.voteBtn}
+              onClick={voteHandler.bind(this, "up")}
+            >
               <img src={plusIcon} alt="plusIcon" />
             </button>
-            <span className={classes.score}>{props.score}</span>
-            <button className={classes.voteBtn}>
+            <span className={classes.score}>{score}</span>
+            <button
+              className={classes.voteBtn}
+              onClick={voteHandler.bind(this, "down")}
+            >
               <img src={minusIcon} alt="minusIcon" />
             </button>
           </div>
