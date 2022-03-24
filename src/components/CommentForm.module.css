@@ -1,11 +1,10 @@
 .commentForm {
   background-color: hsl(0, 0%, 100%);
-  display: flex;
-  flex-direction: column;
   margin: 1.2rem;
   border-radius: 1rem;
   padding: 1.8rem;
-  gap: 2rem;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 1fr 1fr;
 }
 .commentForm textarea {
   font-family: inherit;
@@ -15,15 +14,14 @@
   border-color: hsl(223, 19%, 93%);
   color: hsl(211, 10%, 45%);
   padding: 1rem 2rem;
-}
-.action {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: block;
+  width: 100%;
+  grid-column: 1/-1;
 }
 
 .avatar {
-  width: 3rem;
+  display: inline-block;
+  grid-column: 1/1;
 }
 
 .submitBtn {
@@ -35,4 +33,25 @@
   padding: 1rem 2rem;
   border: none;
   border-radius: 0.8rem;
+  grid-column: 4/4;
+  width: 8rem;
+  justify-self: center;
+}
+
+@media screen and (min-width: 768px) {
+  .commentForm {
+    display: grid;
+    grid-template-columns: 5rem auto 8rem;
+  }
+  .avatar {
+    grid-row: 1/1;
+    grid-column: 1/1;
+  }
+  .submitBtn {
+    font-size: 1.4rem;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 0.8rem;
+    height: 4rem;
+  }
 }

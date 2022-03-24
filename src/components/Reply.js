@@ -17,7 +17,8 @@ const Reply = (props) => {
   );
   const [isReplying, setIsReplying] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
+  const [score, setScore] = useState(props.score);
+  const [scoreModified, setSCoreModified] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
   const [text, setText] = useState(props.text);
@@ -39,6 +40,19 @@ const Reply = (props) => {
     e.preventDefault();
     setText(e.target.text.value);
     setIsEdit(false);
+  };
+
+  const voteHandler = (action) => {
+    if (scoreModified) return;
+    if (action === "up") {
+      setScore((prevScore) => prevScore + 1);
+      setSCoreModified(true);
+    } else if (action === "down") {
+      setScore((prevScore) => prevScore - 1);
+      setSCoreModified(true);
+    } else {
+      return;
+    }
   };
 
   let actionArea;
@@ -93,7 +107,10 @@ const Reply = (props) => {
         </div>
         <div className={classes.textbox}>
           {!isEdit ? (
-            <p className={classes.text}>{text}</p>
+            <p className={classes.text}>
+              <span className={classes.replyingTo}>@{props.replyingTo}</span>
+              {text}
+            </p>
           ) : (
             <form id="editForm" onSubmit={submitEditHandler}>
               <input placeholder="Text" name="text" defaultValue={text} />
@@ -102,11 +119,17 @@ const Reply = (props) => {
         </div>
         <div className={classes.actions}>
           <div className={classes.voteBox}>
-            <button className={classes.voteBtn}>
+            <button
+              className={classes.voteBtn}
+              onClick={voteHandler.bind(this, "up")}
+            >
               <img src={plusIcon} alt="plusIcon" />
             </button>
-            <span className={classes.score}>{props.score}</span>
-            <button className={classes.voteBtn}>
+            <span className={classes.score}>{score}</span>
+            <button
+              className={classes.voteBtn}
+              onClick={voteHandler.bind(this, "down")}
+            >
               <img src={minusIcon} alt="minusIcon" />
             </button>
           </div>

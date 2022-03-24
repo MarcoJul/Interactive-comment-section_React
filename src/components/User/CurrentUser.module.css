@@ -1,3 +1,9 @@
 .avatarImg {
   width: 3rem;
 }
+
+@media screen and (min-width: 768px) {
+  .avatarImg {
+    width: 3.5rem;
+  }
+}

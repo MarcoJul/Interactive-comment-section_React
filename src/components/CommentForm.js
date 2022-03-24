@@ -20,7 +20,7 @@ const CommentForm = (props) => {
       textRef.current.value = "";
     }
     if (props.type === "reply") {
-      props.onAddReply(`@${props.username} ${textRef.current.value}`);
+      props.onAddReply(textRef.current.value, props.username);
       textRef.current.value = "";
     }
   };
@@ -31,11 +31,11 @@ const CommentForm = (props) => {
         ref={textRef}
         className={classes.input}
         placeholder="Add a comment..."
-      ></textarea>
-      <div className={classes.action}>
+      />
+      <div className={classes.avatar}>
         <CurrentUser request="avatar" />
-        <button className={classes.submitBtn}>Send</button>
       </div>
+      <button className={classes.submitBtn}>Send</button>
     </form>
   );
 };

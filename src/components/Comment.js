@@ -50,7 +50,7 @@ const Comment = (props) => {
     );
   };
 
-  const addReplyHandler = (text) => {
+  const addReplyHandler = (text, username) => {
     let newReply = {
       id: Math.random(),
       content: text,
@@ -60,6 +60,7 @@ const Comment = (props) => {
       },
       createdAt: "2 hours ago",
       score: 0,
+      replyingTo: username,
     };
     setReplies((previousReplies) => {
       return [...previousReplies, newReply];
@@ -187,6 +188,7 @@ const Comment = (props) => {
                 score={reply.score}
                 onDeleteReply={deleteReplyHandler}
                 onAddReply={addReplyHandler}
+                replyingTo={reply.replyingTo}
               />
             );
           })}
