@@ -5,6 +5,7 @@
   padding: 1.8rem;
   display: grid;
   grid-template-columns: 0.5fr 1fr 1fr 1fr;
+  row-gap: 1rem;
 }
 .commentForm textarea {
   font-family: inherit;
@@ -24,6 +25,11 @@
   grid-column: 1/1;
 }
 
+.actionBtn {
+  grid-column: 4/4;
+  justify-self: right;
+}
+
 .submitBtn {
   background-color: hsl(238, 40%, 52%);
   color: hsl(223, 19%, 93%);
@@ -33,15 +39,19 @@
   padding: 1rem 2rem;
   border: none;
   border-radius: 0.8rem;
-  grid-column: 4/4;
   width: 8rem;
-  justify-self: center;
 }
 
 @media screen and (min-width: 768px) {
   .commentForm {
     display: grid;
-    grid-template-columns: 5rem auto 8rem;
+    grid-template-columns: 3.5rem auto 8rem;
+    column-gap: 2rem;
+  }
+
+  .commentForm textarea {
+    grid-column: 2/2;
+    grid-row: 1/1;
   }
   .avatar {
     grid-row: 1/1;

@@ -35,7 +35,9 @@ const CommentForm = (props) => {
       <div className={classes.avatar}>
         <CurrentUser request="avatar" />
       </div>
-      <button className={classes.submitBtn}>Send</button>
+      <div className={classes.actionBtn}>
+        <button className={classes.submitBtn}>Send</button>
+      </div>
     </form>
   );
 };
