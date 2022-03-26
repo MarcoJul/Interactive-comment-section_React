@@ -57,11 +57,21 @@
     grid-row: 1/1;
     grid-column: 1/1;
   }
+
+  .actionBtn {
+    grid-column: 3/3;
+    justify-self: right;
+  }
   .submitBtn {
     font-size: 1.4rem;
     padding: 1rem 2rem;
     border: none;
     border-radius: 0.8rem;
     height: 4rem;
+    cursor: pointer;
+  }
+
+  .submitBtn:hover {
+    background-color: hsl(238, 50%, 52%);
   }
 }

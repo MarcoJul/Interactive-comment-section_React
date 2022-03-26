@@ -90,7 +90,7 @@ const Comment = (props) => {
   let actionArea;
   if (isCurrentUser) {
     actionArea = (
-      <div className={classes.btnSection}>
+      <div className={classes.actionArea}>
         <button
           className={`${classes.actionBtn} ${classes.deleteBtn}`}
           onClick={toggleDeleteModal}
@@ -106,10 +106,12 @@ const Comment = (props) => {
     );
   } else {
     actionArea = (
-      <button className={classes.actionBtn} onClick={replyHandler}>
-        <img src={replyIcon} alt="replyicon" />
-        Reply
-      </button>
+      <div className={classes.actionArea}>
+        <button className={classes.actionBtn} onClick={replyHandler}>
+          <img src={replyIcon} alt="replyicon" />
+          Reply
+        </button>
+      </div>
     );
   }
 
@@ -142,30 +144,28 @@ const Comment = (props) => {
             </form>
           )}
         </div>
-        <div className={classes.actions}>
-          <div className={classes.voteBox}>
-            <button
-              className={classes.voteBtn}
-              onClick={voteHandler.bind(this, "up")}
-            >
-              <img src={plusIcon} alt="plusIcon" />
-            </button>
-            <span className={classes.score}>{score}</span>
-            <button
-              className={classes.voteBtn}
-              onClick={voteHandler.bind(this, "down")}
-            >
-              <img src={minusIcon} alt="minusIcon" />
-            </button>
-          </div>
-          {isEdit ? (
-            <button className={classes.submitBtn} form="editForm">
-              U
-            </button>
-          ) : (
-            actionArea
-          )}
+        <div className={classes.voteBox}>
+          <button
+            className={classes.voteBtn}
+            onClick={voteHandler.bind(this, "up")}
+          >
+            <img src={plusIcon} alt="plusIcon" />
+          </button>
+          <span className={classes.score}>{score}</span>
+          <button
+            className={classes.voteBtn}
+            onClick={voteHandler.bind(this, "down")}
+          >
+            <img src={minusIcon} alt="minusIcon" />
+          </button>
         </div>
+        {isEdit ? (
+          <button className={classes.submitBtn} form="editForm">
+            Update
+          </button>
+        ) : (
+          actionArea
+        )}
       </li>
       {isReplying && (
         <CommentForm
